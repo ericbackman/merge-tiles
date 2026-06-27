@@ -5,7 +5,7 @@ import Tile from './Tile.jsx';
 //   2. The live tiles, absolutely positioned on top and keyed by id.
 // Keying by id is what lets a tile keep its DOM node as it moves, so CSS can
 // animate the slide instead of React tearing it down and rebuilding it.
-export default function Board({ tiles, size }) {
+export default function Board({ tiles, size, dark }) {
   return (
     // --size drives the CSS grid template and the cell-size calc; the number of
     // background cells is size² so the empty grid always matches the board.
@@ -14,7 +14,7 @@ export default function Board({ tiles, size }) {
         <div key={`bg-${i}`} className="cell-bg" />
       ))}
       {tiles.map((tile) => (
-        <Tile key={tile.id} tile={tile} />
+        <Tile key={tile.id} tile={tile} dark={dark} />
       ))}
     </div>
   );

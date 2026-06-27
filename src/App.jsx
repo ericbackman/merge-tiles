@@ -1,6 +1,9 @@
+import { useLayoutEffect, useState } from 'react';
 import { useGame } from './hooks/useGame.js';
 import { RULES } from './game/rules.js';
+import { DEFAULT_THEME, applyTheme, loadTheme, saveTheme } from './theme.js';
 import Board from './components/Board.jsx';
+import ThemePicker from './components/ThemePicker.jsx';
 import './App.css';
 
 const SIZES = [4, 5, 6];
@@ -11,6 +14,14 @@ export default function App() {
   // The switcher reads straight from the RULES registry, so adding a rule in
   // rules.js makes a button appear here automatically — no UI changes needed.
   const modes = Object.values(RULES);
+
+  // Live "chameleon paint": theme is persisted and applied to :root before the
+  // browser paints (useLayoutEffect) so a saved skin shows with no flash.
+  const [theme, setTheme] = useState(loadTheme);
+  useLayoutEffect(() => {
+    applyTheme(theme);
+    saveTheme(theme);
+  }, [theme]);
 
   return (
     <div className="app">
@@ -57,7 +68,7 @@ export default function App() {
       <p className="rule-blurb">{rule.blurb}</p>
 
       <div className="board-wrap">
-        <Board tiles={tiles} size={size} />
+        <Board tiles={tiles} size={size} dark={theme.dark} />
         {(won || over) && (
           <div className="overlay">
             <div className="overlay-text">
@@ -85,6 +96,8 @@ export default function App() {
         </a>
         . Not affiliated. Built by Eric Backman.
       </footer>
+
+      <ThemePicker theme={theme} onChange={setTheme} onReset={() => setTheme(DEFAULT_THEME)} />
     </div>
   );
 }

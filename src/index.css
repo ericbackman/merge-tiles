@@ -1,7 +1,9 @@
 :root {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  /* ── Nightfall theme — change these to re-skin the whole app ──────────── */
+  /* ── Default theme — overridden live by theme.js (the paint control) ──── */
+  --tile-hue: 207;        /* tile colour wheel position (0–360) */
+  --tile-sat: 45%;        /* tile colour vividness */
   --bg: #1e242b;          /* page background */
   --board-bg: #2c343d;    /* the board behind the tiles */
   --cell-bg: rgba(147, 188, 217, 0.08); /* empty cells: a faint blue tint */

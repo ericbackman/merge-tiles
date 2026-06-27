@@ -257,3 +257,119 @@ button:hover {
   color: var(--text-muted);
   text-decoration: underline;
 }
+
+/* ── Chameleon paint: a low-key colour dot, bottom-right ─────────────────── */
+.paint {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.paint-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  padding: 0;
+  background: hsl(var(--tile-hue, 207) var(--tile-sat, 45%) 55%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  opacity: 0.6;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.paint-btn:hover {
+  opacity: 1;
+  transform: scale(1.07);
+}
+
+.paint-panel {
+  width: 220px;
+  padding: 14px;
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.paint-row {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.paint-row > label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.paint-row input[type='range'] {
+  width: 100%;
+}
+
+.hue-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(
+    to right,
+    hsl(0 70% 55%), hsl(60 70% 55%), hsl(120 70% 55%),
+    hsl(180 70% 55%), hsl(240 70% 55%), hsl(300 70% 55%), hsl(360 70% 55%)
+  );
+}
+
+.hue-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+.hue-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+.seg {
+  display: flex;
+  gap: 6px;
+}
+
+.seg button {
+  flex: 1;
+  padding: 0.4rem;
+  font-size: 0.85rem;
+  background: var(--btn-inactive);
+  color: var(--text-muted);
+}
+
+.seg button.on {
+  background: var(--btn-active);
+  color: var(--text);
+}
+
+.paint-reset {
+  padding: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--btn-inactive);
+}
