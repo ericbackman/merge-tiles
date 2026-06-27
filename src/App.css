@@ -275,7 +275,7 @@ button:hover {
   height: 42px;
   border-radius: 50%;
   padding: 0;
-  background: hsl(var(--tile-hue, 207) var(--tile-sat, 45%) 55%);
+  background: var(--accent, hsl(207 45% 55%));
   border: 2px solid rgba(255, 255, 255, 0.3);
   opacity: 0.6;
   transition: opacity 0.15s ease, transform 0.15s ease;
@@ -296,6 +296,39 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 13px;
+}
+
+.paint-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+
+.swatch {
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease;
+}
+
+.swatch:hover {
+  transform: scale(1.08);
+}
+
+.swatch.active {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
+}
+
+.swatch-dot {
+  width: 42%;
+  height: 42%;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .paint-row {

@@ -68,7 +68,7 @@ export default function App() {
       <p className="rule-blurb">{rule.blurb}</p>
 
       <div className="board-wrap">
-        <Board tiles={tiles} size={size} dark={theme.dark} />
+        <Board tiles={tiles} size={size} theme={theme} />
         {(won || over) && (
           <div className="overlay">
             <div className="overlay-text">

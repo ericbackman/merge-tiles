@@ -4,6 +4,7 @@
   /* ── Default theme — overridden live by theme.js (the paint control) ──── */
   --tile-hue: 207;        /* tile colour wheel position (0–360) */
   --tile-sat: 45%;        /* tile colour vividness */
+  --accent: hsl(207 45% 55%); /* representative theme colour (paint dot) */
   --bg: #1e242b;          /* page background */
   --board-bg: #2c343d;    /* the board behind the tiles */
   --cell-bg: rgba(147, 188, 217, 0.08); /* empty cells: a faint blue tint */

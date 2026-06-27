@@ -4,12 +4,12 @@ import { tileStyle } from '../theme.js';
 // property and can't share it:
 //   .tile       — positioned by (row,col); transitions transform to SLIDE.
 //   .tile-inner — runs the spawn/merge keyframes that scale to POP.
-// Colour comes from theme.js: hue + saturation via CSS vars (live), lightness
-// per value (ramp direction depends on the dark/light background).
-export default function Tile({ tile, dark }) {
+// Colour comes from theme.js: hue mode uses CSS vars + a per-value lightness
+// ramp; palette mode (e.g. Original 2048) uses explicit per-value colours.
+export default function Tile({ tile, theme }) {
   const { value, row, col, isNew, merged } = tile;
 
-  const { background, color } = tileStyle(value, dark);
+  const { background, color } = tileStyle(value, theme);
   // Size the font by digit count so 65536 and 8 both fit their tile.
   const digits = String(value).length;
   const fontSize =
