@@ -1,0 +1,259 @@
+.app {
+  width: 100%;
+  max-width: 460px;
+  padding: 1.5rem 1rem 3rem;
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.6rem;
+  letter-spacing: -1px;
+  color: var(--text);
+}
+
+.mode {
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.85rem 0 0.25rem;
+}
+
+.mode-btn {
+  background: var(--btn-inactive);
+  color: var(--text-muted);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+.mode-btn.active {
+  background: var(--btn-active);
+  color: var(--text);
+}
+
+.sizes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.sizes-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.size-btn {
+  background: var(--btn-inactive);
+  color: var(--text-muted);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.size-btn.active {
+  background: var(--btn-active);
+  color: var(--text);
+}
+
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0 0.25rem;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  color: var(--text-muted);
+  padding: 0.4rem 1.1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.score strong {
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 6px;
+  background: var(--btn);
+  color: var(--text);
+  padding: 0.6rem 1.1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background 0.15s ease;
+}
+
+button:hover {
+  background: var(--btn-hover);
+}
+
+.rule-blurb {
+  margin: 0.4rem 0 1rem;
+  color: var(--text-muted);
+}
+
+.board-wrap {
+  position: relative;
+  width: max-content;
+  margin: 0 auto;
+}
+
+/* ── Feel knobs — tweak these to change how the game FEELS ──────────────────
+   --slide : time a tile takes to glide to its new spot (lower = snappier)
+   --ease  : the motion curve (try cubic-bezier(.34,1.56,.64,1) for overshoot)
+   --pop   : how much a merged tile bulges (1.0 = no pop, 1.3 = very bouncy)
+   --gap   : spacing between cells; --board : overall board width (responsive) */
+.board {
+  --size: 4; /* fallback; <Board> sets this inline per game (4, 5, 6, …) */
+  --gap: 10px;
+  --board: min(92vw, 460px);
+  /* Cells divide the board evenly, so any grid size fills the same footprint:
+     board = size·cell + (size+1)·gap  ⇒  cell = (board − (size+1)·gap) / size */
+  --cell: calc((var(--board) - (var(--size) + 1) * var(--gap)) / var(--size));
+  --slide: 120ms;
+  --ease: ease-in-out;
+  --pop: 1.18;
+
+  position: relative;
+  width: var(--board);
+  display: grid;
+  grid-template-columns: repeat(var(--size), var(--cell));
+  grid-template-rows: repeat(var(--size), var(--cell));
+  gap: var(--gap);
+  padding: var(--gap);
+  background: var(--board-bg);
+  border-radius: 8px;
+  touch-action: none; /* we handle swipes ourselves; stop the page panning */
+}
+
+/* The static squares of the empty grid (size² of them). */
+.cell-bg {
+  background: var(--cell-bg);
+  border-radius: 6px;
+}
+
+/* Positioning layer: placed by (--row,--col), transitions transform to SLIDE. */
+.tile {
+  position: absolute;
+  top: var(--gap);
+  left: var(--gap);
+  width: var(--cell);
+  height: var(--cell);
+  transform: translate(
+    calc(var(--col) * (var(--cell) + var(--gap))),
+    calc(var(--row) * (var(--cell) + var(--gap)))
+  );
+  transition: transform var(--slide) var(--ease);
+}
+
+/* Scale layer: spawn fade-in + merge pop run here (its own transform). A faint
+   border keeps even the darkest (smallest) tiles crisp against the board. */
+.tile-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tile-inner.is-new {
+  animation: appear 150ms ease;
+}
+
+.tile-inner.is-merged {
+  animation: pop 160ms ease;
+}
+
+@keyframes appear {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(var(--pop)); }
+  100% { transform: scale(1); }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.overlay-text {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.hint {
+  margin: 1.25rem 0 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dpad-row {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.dpad button {
+  width: 3.25rem;
+  height: 3.25rem;
+  font-size: 1.3rem;
+  padding: 0;
+}
+
+.credit {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+
+.credit a {
+  color: var(--text-muted);
+  text-decoration: underline;
+}

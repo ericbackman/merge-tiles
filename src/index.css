@@ -1,0 +1,30 @@
+:root {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* ── Nightfall theme — change these to re-skin the whole app ──────────── */
+  --bg: #1e242b;          /* page background */
+  --board-bg: #2c343d;    /* the board behind the tiles */
+  --cell-bg: rgba(147, 188, 217, 0.08); /* empty cells: a faint blue tint */
+  --text: #e8eef4;        /* primary text: headings, the score number */
+  --text-muted: #8ea7bd;  /* labels, blurb, hints */
+  --panel: #283039;       /* raised surfaces (score box) */
+  --btn: #38485a;         /* button background */
+  --btn-hover: #44586d;
+  --btn-active: #4f7796;  /* selected mode / size */
+  --btn-inactive: #313c48;
+  --overlay: rgba(20, 25, 31, 0.86); /* win/lose veil */
+
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+}
